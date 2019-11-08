@@ -870,7 +870,9 @@ public class Login extends javax.swing.JFrame {
         if (jTabbedPane1.getSelectedIndex() == 2) {
             ta_listadoFav.setText("");
             for (int i = 0; i < usuarioActual.getLista_libros().size(); i++) {
-                
+                if (usuarioActual.getGenero_favorito().toString().equals(cb_genero.getSelectedItem())) {
+                    ta_listadoFav.append(usuarioActual.getLista_libros().get(i).toString());
+                }
             }
         }
     }//GEN-LAST:event_jTabbedPane2StateChanged
