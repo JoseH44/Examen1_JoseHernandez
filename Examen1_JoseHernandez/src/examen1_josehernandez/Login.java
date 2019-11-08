@@ -187,6 +187,11 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setText("Contraseña:");
 
         jButton1.setText("Aceptar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         jButton2.setText("Registrarse");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -261,6 +266,7 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         Registro.setVisible(true);
+        Registro.pack();
         setLocationRelativeTo(this);
         this.setVisible(false);
     }//GEN-LAST:event_jButton2MouseClicked
@@ -281,10 +287,31 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden");
 
         } else {
-            Usuario x = new Usuario(nom_usuario, contra, fecha, num_tel, correo,gen);
+            Usuario x = new Usuario(nom_usuario, contra, fecha, num_tel, correo, gen);
+            lista_usuarios.add(x);
+            tf_nomUsuario.setText("");
+            pf_contra.setText("");
+            pf_confirmarContra.setText("");
+            dc_fechaNacimiento.setDate(new Date());
+            tf_numTelefono.setText("");
+            tf_correo.setText("");
+            JOptionPane.showMessageDialog(this, "Registrado Correctamente");
+            Registro.dispose();
+            this.setVisible(true);
         }
 
+
     }//GEN-LAST:event_jButton4MouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        String usuarioLog = tf_usuarioLog.getText();
+        String contraLog = tf_contraLog.getText();
+        for (int i = 0; i < lista_usuarios.size(); i++) {
+            if (lista_usuarios.get(i).getNom_usuario().equals(usuarioLog) && lista_usuarios.get(i).getContrasena().equals(contraLog)) {
+                usuarioActual = lista_usuarios.get(i);
+            }
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments

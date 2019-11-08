@@ -10,10 +10,9 @@ public class Usuario {
     private Date fecha_nacimiento;
     private String num_telefono;
     private String correo;
-    private String nom_completo;
+
     private Genero genero_fav;
     private ArrayList<Libro> lista_libros;
-    private ArrayList<Usuario> amigos;
 
     public Usuario() {
     }
@@ -24,9 +23,9 @@ public class Usuario {
         this.fecha_nacimiento = fecha_nacimiento;
         this.num_telefono = num_telefono;
         this.correo = correo;
-        this.nom_completo = nom_completo;
+
         this.genero_fav = genero_favorito;
-        
+
     }
 
     public String getNom_usuario() {
@@ -69,14 +68,6 @@ public class Usuario {
         this.correo = correo;
     }
 
-    public String getNom_completo() {
-        return nom_completo;
-    }
-
-    public void setNom_completo(String nom_completo) {
-        this.nom_completo = nom_completo;
-    }
-
     public Genero getGenero_favorito() {
         return genero_fav;
     }
@@ -93,19 +84,9 @@ public class Usuario {
         this.lista_libros = lista_libros;
     }
 
-    public ArrayList<Usuario> getAmigos() {
-        return amigos;
-    }
-
-    public void setAmigos(ArrayList<Usuario> amigos) {
-        this.amigos = amigos;
-    }
-    
-    
-
     @Override
     public String toString() {
-        return "Usuario{" + "nom_usuario=" + nom_usuario + ", contrasena=" + contrasena + ", fecha_nacimiento=" + fecha_nacimiento + ", num_telefono=" + num_telefono + ", correo=" + correo + ", nom_completo=" + nom_completo + ", genero_favorito=" + genero_fav + '}';
+        return "Usuario{" + "nom_usuario=" + nom_usuario + ", contrasena=" + contrasena + ", fecha_nacimiento=" + fecha_nacimiento + ", num_telefono=" + num_telefono + ", correo=" + correo + ", genero_favorito=" + genero_fav + '}';
     }
 
 }
