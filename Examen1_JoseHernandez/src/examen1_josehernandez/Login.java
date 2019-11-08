@@ -7,6 +7,8 @@ package examen1_josehernandez;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -20,28 +22,35 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    public Login() {
+    public Login() throws miExcepcion {
         initComponents();
-        
+
         DefaultComboBoxModel model = (DefaultComboBoxModel) cb_genero.getModel();
         model.addElement(new Genero("Fantasia"));
         model.addElement(new Genero("Romance"));
         model.addElement(new Genero("Accion"));
         model.addElement(new Genero("Historia"));
         cb_genero.setModel(model);
-        
+
         DefaultComboBoxModel model1 = (DefaultComboBoxModel) cb_fav.getModel();
         model1.addElement(new Genero("Fantasia"));
         model1.addElement(new Genero("Romance"));
         model1.addElement(new Genero("Accion"));
         model1.addElement(new Genero("Historia"));
         cb_fav.setModel(model1);
-        
+
         lista_usuarios.add(new administrador("Jose21", "1234", new Date(), "9967-2341", "joscrack@hotmail.es", new Genero("Fantasia")));
         lista_usuarios.add(new administrador("pedro00", "qwerty", new Date(), "9887-2341", "pedrito@hotmail.com", new Genero("Fantasia")));
         lista_usuarios.add(new administrador("fernanda1990", "1234RT", new Date(), "8967-2342", "mafer@gmail.com", new Genero("Accion")));
         lista_usuarios.add(new administrador("taran2000", "micasa", new Date(), "8667-1340", "tara66@gmail.com", new Genero("Romance")));
         lista_usuarios.add(new administrador("GustavoPeralta24", "4567", new Date(), "9257-5361", "crack@hotmail.es", new Genero("Historia")));
+
+        libros.add(new Libro("Cien años de soledad", "Muchos años después, frente al pelotón de fusilamiento, el coronel Aureliano Buendía había de recordar aquella tarde remota en que su padre lo llevó a conocer el hielo", 5, 100, new Genero("Accion"), 590, "Primera Edicion", "Garcia Marquez", new Date()));
+        libros.add(new Libro("Busqueda", "Un hombre perdido en el mundo busca la respuesta a todo", 4, 200, new Genero("Accion"), 990, "Primera Edicion", "Pedro Carcamo", new Date()));
+        libros.add(new Libro("Cabeza", "Un misterioso sin cabeza aparece en un aldea escondida", 5, 100, new Genero("Accion"), 590, "Primera Edicion", "Paco", new Date()));
+        libros.add(new Libro("Palabras", "Libro para enseñar a los niños a hablar", 2, 1000, new Genero("Accion"), 590, "Primera Edicion", "Dr.Colindres", new Date()));
+        libros.add(new Libro("Sincer", "Una historia de amor en la segunda guerra undial", 5, 700, new Genero("Romance"), 590, "Primera Edicion", "Coronel Barbados", new Date()));
+
     }
 
     /**
@@ -460,6 +469,12 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        cb_LibrosGenerales.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_LibrosGeneralesItemStateChanged(evt);
+            }
+        });
+
         jLabel21.setText("Libros En Biblioteca:");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -673,18 +688,18 @@ public class Login extends javax.swing.JFrame {
         String num_tel = tf_numTelefono.getText();
         String correo = tf_correo.getText();
         Genero gen = (Genero) cb_genero.getSelectedItem();
-        
+
         if (nom_usuario.isEmpty() || contra.isEmpty() || contraConfirm.isEmpty()
                 || num_tel.isEmpty() || correo.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Alguno de los Campos esta Vacio");
         } else if (!contra.equals(contraConfirm)) {
             JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden");
-            
+
         } else {
             Usuario x = new UsuarioNormal(nom_usuario, contra, fecha, num_tel, correo, gen);
-            
+
             lista_usuarios.add(x);
-            
+
             tf_nomUsuario.setText("");
             pf_contra.setText("");
             pf_confirmarContra.setText("");
@@ -696,16 +711,16 @@ public class Login extends javax.swing.JFrame {
             Registro.dispose();
             this.setVisible(true);
         }
-        
+
 
     }//GEN-LAST:event_jButton4MouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         String usuarioLog = tf_usuarioLog.getText();
         String contraLog = pf_contraLog.getText();
-        
+
         for (int i = 0; i < lista_usuarios.size(); i++) {
-            
+
             if ((lista_usuarios.get(i).getNom_usuario().equals(usuarioLog) && lista_usuarios.get(i).getContrasena().equals(contraLog)) && lista_usuarios.get(i) instanceof administrador) {
                 usuarioActual = lista_usuarios.get(i);
                 SistemaAdmin.setVisible(true);
@@ -723,7 +738,7 @@ public class Login extends javax.swing.JFrame {
                 this.setVisible(false);
                 break;
             }
-            
+
         }
         // if (!lista_usuarios.get(i).getNom_usuario().equals(usuarioLog) && lista_usuarios.get(i).getContrasena().equals(contraLog)) {
         //JOptionPane.showMessageDialog(this, "Usted No esta Registrado o Introdujo el usuario/contraseña Incorrecta");
@@ -732,12 +747,24 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
         if (tabalInfo.getSelectedRow() >= 0) {
-            DefaultComboBoxModel modelo = (DefaultComboBoxModel) tabalInfo.getModel();
+            DefaultTableModel modelo
+                    = (DefaultTableModel) tabalInfo.getModel();
+            int op = Integer.parseInt(JOptionPane.showInputDialog("1.Modificar Nombre \n"
+                    + "2.Modificar Autor \n"
+                    + "3.Modificar Copia"));
+            if (op == 1) {
+                String newName = JOptionPane.showInputDialog("Ingrese el nuevo nombre del libro");
+            }else if (op == 2) {
+                
+            }else{
+                
+            }
             
+            int mes = Integer.parseInt(JOptionPane.showInputDialog("nuevo mes"));
+            ((Date) modelo.getValueAt(tabalInfo.getSelectedRow(), 3)).setMonth(mes);
+            tabalInfo.setModel(modelo);
         }
-        String titulo = JOptionPane.showInputDialog("Ingrese el nuevo titulo del libro:");
-        String autor = JOptionPane.showInputDialog("Ingrese el nuevo autor:");
-        int newCopias = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva cantidad de copias:"));
+
 
     }//GEN-LAST:event_jButton7MouseClicked
 
@@ -750,7 +777,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6MouseClicked
 
     private void cb_bibliotecaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_bibliotecaItemStateChanged
-        
+
         if (evt.getStateChange() == 2) {
             Libro li = (Libro) cb_biblioteca.getSelectedItem();
             Object[] Row1 = {
@@ -763,7 +790,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_cb_bibliotecaItemStateChanged
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
-        
+
         try {
             String titulo = tf_tituloLibro.getText();
             String autor = tf_autor.getText();
@@ -771,7 +798,7 @@ public class Login extends javax.swing.JFrame {
             String descripcion = ta_descripcion.getText();
             int copias = Integer.parseInt(tf_copias.getText());
             Genero gen = (Genero) cb_fav.getSelectedItem();
-            
+
             int valor = Integer.parseInt(tf_valor.getText());
             Date fecha_publicacion = dc_anoPublicacion.getDate();
             String edicion = tf_edicion.getText();
@@ -786,7 +813,7 @@ public class Login extends javax.swing.JFrame {
             DefaultComboBoxModel modelo = (DefaultComboBoxModel) cb_LibrosGenerales.getModel();
             modelo.addElement(lib);
             cb_LibrosGenerales.setModel(modelo);
-            
+
             tf_tituloLibro.setText("");
             tf_valor.setText("");
             tf_edicion.setText("");
@@ -794,7 +821,7 @@ public class Login extends javax.swing.JFrame {
             tf_puntage.setText("");
             ta_descripcion.setText("");
             tf_copias.setText("");
-            
+
         } catch (miExcepcion e) {
             e.getMessage();
         }
@@ -810,6 +837,15 @@ public class Login extends javax.swing.JFrame {
             model.addRow(Row1);
         }
     }//GEN-LAST:event_cb_infoLibroItemStateChanged
+
+    private void cb_LibrosGeneralesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_LibrosGeneralesItemStateChanged
+        if (evt.getStateChange() == 2) {
+            Libro li = (Libro) cb_LibrosGenerales.getSelectedItem();
+            usuarioActual.getLista_libros().add(li);
+        }
+
+
+    }//GEN-LAST:event_cb_LibrosGeneralesItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -841,7 +877,11 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                try {
+                    new Login().setVisible(true);
+                } catch (miExcepcion ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -916,5 +956,5 @@ public class Login extends javax.swing.JFrame {
     ArrayList<Usuario> lista_usuarios = new ArrayList();
     Usuario usuarioActual;
     ArrayList<Libro> libros = new ArrayList();
-    
+
 }
