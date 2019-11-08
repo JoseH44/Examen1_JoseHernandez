@@ -9,7 +9,7 @@ public class Libro {
     private String descripcion;
     private int puntaje;
     private int cop_disponibles;
-    private String genero;
+    private Genero genero;
     private double valor;
     private String edicion;
     private String autor;
@@ -18,10 +18,10 @@ public class Libro {
     public Libro() {
     }
 
-    public Libro(String titulo, String descripcion, int puntaje, int cop_disponibles, String genero, double valor, String edicion, String autor, Date ano_publicacion) {
+    public Libro(String titulo, String descripcion, int puntaje, int cop_disponibles, Genero genero, double valor, String edicion, String autor, Date ano_publicacion) throws miExcepcion {
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.puntaje = puntaje;
+        this.setPuntaje(puntaje);
         this.cop_disponibles = cop_disponibles;
         this.genero = genero;
         this.valor = valor;
@@ -65,11 +65,11 @@ public class Libro {
         this.cop_disponibles = cop_disponibles;
     }
 
-    public String getGenero() {
+    public Genero getGenero() {
         return genero;
     }
 
-    public void setGenero(String genero) {
+    public void setGenero(Genero genero) {
         this.genero = genero;
     }
 
