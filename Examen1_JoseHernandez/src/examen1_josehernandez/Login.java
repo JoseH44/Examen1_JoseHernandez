@@ -754,15 +754,15 @@ public class Login extends javax.swing.JFrame {
                     + "3.Modificar Copia"));
             if (op == 1) {
                 String newName = JOptionPane.showInputDialog("Ingrese el nuevo nombre del libro");
-            }else if (op == 2) {
-                
-            }else{
-                
+                ((Libro) modelo.getValueAt(tabalInfo.getSelectedRow(), 0)).setTitulo(newName);
+            } else if (op == 2) {
+                String newAutor = JOptionPane.showInputDialog("Ingrese el nuevo nombre del autor");
+                ((Libro) modelo.getValueAt(tabalInfo.getSelectedRow(), 1)).setAutor(newAutor);
+            } else {
+                int newCopias = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva cantidad de copias"));
+                ((Libro) modelo.getValueAt(tabalInfo.getSelectedRow(), 2)).setCop_disponibles(newCopias);
             }
-            
-            int mes = Integer.parseInt(JOptionPane.showInputDialog("nuevo mes"));
-            ((Date) modelo.getValueAt(tabalInfo.getSelectedRow(), 3)).setMonth(mes);
-            tabalInfo.setModel(modelo);
+
         }
 
 
