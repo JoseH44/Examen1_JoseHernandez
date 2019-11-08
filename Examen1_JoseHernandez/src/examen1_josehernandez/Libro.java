@@ -1,6 +1,7 @@
 package examen1_josehernandez;
 
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 public class Libro {
 
@@ -49,7 +50,10 @@ public class Libro {
         return puntaje;
     }
 
-    public void setPuntaje(int puntaje) {
+    public void setPuntaje(int puntaje) throws miExcepcion {
+        if (puntaje < 1 || puntaje > 5) {
+            throw new miExcepcion("El puntaje solo puede ser de 1-5");
+        }
         this.puntaje = puntaje;
     }
 
@@ -105,5 +109,7 @@ public class Libro {
     public String toString() {
         return "Libro{" + "titulo=" + titulo + ", descripcion=" + descripcion + ", puntaje=" + puntaje + ", cop_disponibles=" + cop_disponibles + ", genero=" + genero + ", valor=" + valor + ", edicion=" + edicion + ", autor=" + autor + ", ano_publicacion=" + ano_publicacion + '}';
     }
+
+    
 
 }
