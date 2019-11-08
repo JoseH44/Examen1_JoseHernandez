@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,14 +22,14 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
-        
+
         DefaultComboBoxModel model = (DefaultComboBoxModel) cb_genero.getModel();
         model.addElement(new Genero("Fantasia"));
         model.addElement(new Genero("Romance"));
         model.addElement(new Genero("Accion"));
         model.addElement(new Genero("Historia"));
         cb_genero.setModel(model);
-        
+
         lista_usuarios.add(new administrador("Jose21", "1234", new Date(), "9967-2341", "joscrack@hotmail.es", new Genero("Fantasia")));
         lista_usuarios.add(new administrador("pedro00", "qwerty", new Date(), "9887-2341", "pedrito@hotmail.com", new Genero("Fantasia")));
         lista_usuarios.add(new administrador("fernanda1990", "1234RT", new Date(), "8967-2342", "mafer@gmail.com", new Genero("Accion")));
@@ -89,8 +90,12 @@ public class Login extends javax.swing.JFrame {
         dc_anoPublicacion = new com.toedter.calendar.JDateChooser();
         jButton5 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        cb_biblioteca = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabalInfo = new javax.swing.JTable();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        buttonGroup1 = new javax.swing.ButtonGroup();
         SistemaUsuario = new javax.swing.JDialog();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
@@ -355,7 +360,7 @@ public class Login extends javax.swing.JFrame {
                         .addComponent(tf_valor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel20))
                     .addComponent(dc_anoPublicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -369,15 +374,77 @@ public class Login extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Crear Libro", jPanel1);
 
+        cb_biblioteca.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_bibliotecaItemStateChanged(evt);
+            }
+        });
+
+        tabalInfo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Autor", "Copias", "Fecha de Publicacion"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tabalInfo);
+
+        jButton6.setText("Eliminar");
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton6MouseClicked(evt);
+            }
+        });
+
+        jButton7.setText("Modificar");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 732, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(cb_biblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(177, 177, 177)
+                        .addComponent(jButton6)
+                        .addGap(153, 153, 153)
+                        .addComponent(jButton7))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 632, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 440, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(cb_biblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton6)
+                    .addComponent(jButton7))
+                .addGap(64, 64, 64))
         );
 
         jTabbedPane1.addTab("Modificar Libro", jPanel2);
@@ -390,7 +457,7 @@ public class Login extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 440, Short.MAX_VALUE)
+            .addGap(0, 503, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Libros por Genero Favorito", jPanel3);
@@ -561,13 +628,13 @@ public class Login extends javax.swing.JFrame {
         String num_tel = tf_numTelefono.getText();
         String correo = tf_correo.getText();
         Genero gen = (Genero) cb_genero.getSelectedItem();
-        
+
         if (nom_usuario.isEmpty() || contra.isEmpty() || contraConfirm.isEmpty()
                 || num_tel.isEmpty() || correo.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Alguno de los Campos esta Vacio");
         } else if (!contra.equals(contraConfirm)) {
             JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden");
-            
+
         } else {
             Usuario x = new Usuario(nom_usuario, contra, fecha, num_tel, correo, gen);
             lista_usuarios.add(x);
@@ -581,7 +648,7 @@ public class Login extends javax.swing.JFrame {
             Registro.dispose();
             this.setVisible(true);
         }
-        
+
 
     }//GEN-LAST:event_jButton4MouseClicked
 
@@ -605,7 +672,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
-        
+
         try {
             String titulo = tf_tituloLibro.getText();
             String autor = tf_autor.getText();
@@ -625,8 +692,14 @@ public class Login extends javax.swing.JFrame {
             int valor = Integer.parseInt(tf_valor.getText());
             Date fecha_publicacion = dc_anoPublicacion.getDate();
             String edicion = tf_edicion.getText();
-            libros.add(new Libro(titulo, descripcion, puntaje, copias, gen, valor, edicion, autor, fecha_publicacion));
+            Libro lib = new Libro(titulo, descripcion, puntaje, copias, gen, valor, edicion, autor, fecha_publicacion);
+            libros.add(lib);
+            DefaultComboBoxModel model = (DefaultComboBoxModel) cb_biblioteca.getModel();
+            model.addElement(lib);
+            cb_biblioteca.setModel(model);
             tf_tituloLibro.setText("");
+            tf_valor.setText("");
+            tf_edicion.setText("");
             tf_autor.setText("");
             tf_puntage.setText("");
             ta_descripcion.setText("");
@@ -640,6 +713,30 @@ public class Login extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton5MouseClicked
+
+    private void cb_bibliotecaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_bibliotecaItemStateChanged
+        
+        if (evt.getStateChange() == 2) {
+            Libro li = (Libro) cb_biblioteca.getSelectedItem();
+            Object[] Row1 = {
+                li.getTitulo(), li.getAutor(), li.getCop_disponibles(),
+                li.getAno_publicacion()};
+            DefaultTableModel model = (DefaultTableModel) tabalInfo.getModel();
+            model.addRow(Row1);
+        }
+        
+        
+        
+        
+    }//GEN-LAST:event_cb_bibliotecaItemStateChanged
+
+    private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseClicked
+        if (tabalInfo.getSelectedRow() >= 0) {
+            DefaultTableModel model = (DefaultTableModel) tabalInfo.getModel();
+            model.removeRow(tabalInfo.getSelectedRow());
+            tabalInfo.setModel(model);
+        }
+    }//GEN-LAST:event_jButton6MouseClicked
 
     /**
      * @param args the command line arguments
@@ -680,7 +777,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JDialog Registro;
     private javax.swing.JDialog SistemaAdmin;
     private javax.swing.JDialog SistemaUsuario;
-    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> cb_biblioteca;
     private javax.swing.JComboBox<String> cb_genero;
     private com.toedter.calendar.JDateChooser dc_anoPublicacion;
     private com.toedter.calendar.JDateChooser dc_fechaNacimiento;
@@ -689,6 +786,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -716,6 +815,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JPasswordField pf_confirmarContra;
@@ -726,6 +826,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JRadioButton rd_historia;
     private javax.swing.JRadioButton rd_romance;
     private javax.swing.JTextArea ta_descripcion;
+    private javax.swing.JTable tabalInfo;
     private javax.swing.JTextField tf_autor;
     private javax.swing.JTextField tf_copias;
     private javax.swing.JTextField tf_correo;
@@ -740,5 +841,5 @@ public class Login extends javax.swing.JFrame {
     ArrayList<Usuario> lista_usuarios = new ArrayList();
     Usuario usuarioActual;
     ArrayList<Libro> libros = new ArrayList();
-    
+
 }
