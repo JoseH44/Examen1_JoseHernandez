@@ -119,6 +119,8 @@ public class Login extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel22 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        ta_listadoFav = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tf_usuarioLog = new javax.swing.JTextField();
@@ -469,6 +471,12 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jTabbedPane2.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane2StateChanged(evt);
+            }
+        });
+
         cb_LibrosGenerales.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cb_LibrosGeneralesItemStateChanged(evt);
@@ -561,15 +569,26 @@ public class Login extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Ver Informacion de Libros", jPanel5);
 
+        ta_listadoFav.setEditable(false);
+        ta_listadoFav.setColumns(20);
+        ta_listadoFav.setRows(5);
+        jScrollPane4.setViewportView(ta_listadoFav);
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 582, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(93, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(125, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Libros por Genero Favorito", jPanel6);
@@ -847,6 +866,15 @@ public class Login extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cb_LibrosGeneralesItemStateChanged
 
+    private void jTabbedPane2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane2StateChanged
+        if (jTabbedPane1.getSelectedIndex() == 2) {
+            ta_listadoFav.setText("");
+            for (int i = 0; i < usuarioActual.getLista_libros().size(); i++) {
+                
+            }
+        }
+    }//GEN-LAST:event_jTabbedPane2StateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -934,6 +962,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTable1;
@@ -941,6 +970,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField pf_contra;
     private javax.swing.JPasswordField pf_contraLog;
     private javax.swing.JTextArea ta_descripcion;
+    private javax.swing.JTextArea ta_listadoFav;
     private javax.swing.JTable tabalInfo;
     private javax.swing.JTextField tf_autor;
     private javax.swing.JTextField tf_copias;
