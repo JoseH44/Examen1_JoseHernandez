@@ -29,11 +29,11 @@ public class Login extends javax.swing.JFrame {
         model.addElement(new Genero("Historia"));
         cb_genero.setModel(model);
 
-        lista_usuarios.add(new Usuario("Jose", "1234", new Date(), "9967-2341", "joscrack@hotmail.es", new Genero("Fantasia")));
-        lista_usuarios.add(new Usuario("Pedro Duarte", "qwerty", new Date(), "9887-2341", "pedrito@hotmail.com", new Genero("Fantasia")));
-        lista_usuarios.add(new Usuario("Fernanda", "1234RT", new Date(), "8967-2342", "mafer@gmail.com", new Genero("Accion")));
-        lista_usuarios.add(new Usuario("Taran", "micasa", new Date(), "8667-1340", "tara66@gmail.com", new Genero("Romance")));
-        lista_usuarios.add(new Usuario("Gustavo Peralta", "4567", new Date(), "9257-5361", "joscrack@hotmail.es", new Genero("Historia")));
+        lista_usuarios.add(new administrador("Jose21", "1234", new Date(), "9967-2341", "joscrack@hotmail.es", new Genero("Fantasia")));
+        lista_usuarios.add(new administrador("pedro00", "qwerty", new Date(), "9887-2341", "pedrito@hotmail.com", new Genero("Fantasia")));
+        lista_usuarios.add(new administrador("fernanda1990", "1234RT", new Date(), "8967-2342", "mafer@gmail.com", new Genero("Accion")));
+        lista_usuarios.add(new administrador("taran2000", "micasa", new Date(), "8667-1340", "tara66@gmail.com", new Genero("Romance")));
+        lista_usuarios.add(new administrador("GustavoPeralta24", "4567", new Date(), "9257-5361", "joscrack@hotmail.es", new Genero("Historia")));
     }
 
     /**
@@ -544,6 +544,7 @@ public class Login extends javax.swing.JFrame {
                 pf_contraLog.setText("");
             } else {
                 JOptionPane.showMessageDialog(this, "Usted No esta Registrado o Introdujo el usuario/contraseña Incorrecta");
+                break;
             }
         }
     }//GEN-LAST:event_jButton1MouseClicked
