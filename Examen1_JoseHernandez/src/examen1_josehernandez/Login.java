@@ -34,7 +34,7 @@ public class Login extends javax.swing.JFrame {
         lista_usuarios.add(new administrador("pedro00", "qwerty", new Date(), "9887-2341", "pedrito@hotmail.com", new Genero("Fantasia")));
         lista_usuarios.add(new administrador("fernanda1990", "1234RT", new Date(), "8967-2342", "mafer@gmail.com", new Genero("Accion")));
         lista_usuarios.add(new administrador("taran2000", "micasa", new Date(), "8667-1340", "tara66@gmail.com", new Genero("Romance")));
-        lista_usuarios.add(new administrador("GustavoPeralta24", "4567", new Date(), "9257-5361", "joscrack@hotmail.es", new Genero("Historia")));
+        lista_usuarios.add(new administrador("GustavoPeralta24", "4567", new Date(), "9257-5361", "crack@hotmail.es", new Genero("Historia")));
     }
 
     /**
@@ -99,6 +99,8 @@ public class Login extends javax.swing.JFrame {
         SistemaUsuario = new javax.swing.JDialog();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
+        cb_LibrosGenerales = new javax.swing.JComboBox<>();
+        jLabel21 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -413,6 +415,11 @@ public class Login extends javax.swing.JFrame {
         });
 
         jButton7.setText("Modificar");
+        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton7MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -475,15 +482,27 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jLabel21.setText("Libros En Biblioteca:");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 582, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(jLabel21)
+                .addGap(18, 18, 18)
+                .addComponent(cb_LibrosGenerales, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(311, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 396, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(133, 133, 133)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cb_LibrosGenerales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21))
+                .addContainerGap(347, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Agregar Libros a mi Lista", jPanel4);
@@ -496,7 +515,7 @@ public class Login extends javax.swing.JFrame {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 396, Short.MAX_VALUE)
+            .addGap(0, 500, Short.MAX_VALUE)
         );
 
         jTabbedPane2.addTab("Ver Informacion de Libros", jPanel5);
@@ -509,7 +528,7 @@ public class Login extends javax.swing.JFrame {
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 396, Short.MAX_VALUE)
+            .addGap(0, 500, Short.MAX_VALUE)
         );
 
         jTabbedPane2.addTab("Libros por Genero Favorito", jPanel6);
@@ -636,8 +655,10 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden");
 
         } else {
-            Usuario x = new Usuario(nom_usuario, contra, fecha, num_tel, correo, gen);
+            Usuario x = new UsuarioNormal(nom_usuario, contra, fecha, num_tel, correo, gen);
+
             lista_usuarios.add(x);
+
             tf_nomUsuario.setText("");
             pf_contra.setText("");
             pf_confirmarContra.setText("");
@@ -645,6 +666,7 @@ public class Login extends javax.swing.JFrame {
             tf_numTelefono.setText("");
             tf_correo.setText("");
             JOptionPane.showMessageDialog(this, "Registrado Correctamente");
+            System.out.println(lista_usuarios);
             Registro.dispose();
             this.setVisible(true);
         }
@@ -655,20 +677,31 @@ public class Login extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         String usuarioLog = tf_usuarioLog.getText();
         String contraLog = pf_contraLog.getText();
+
         for (int i = 0; i < lista_usuarios.size(); i++) {
-            if (lista_usuarios.get(i).getNom_usuario().equals(usuarioLog) && lista_usuarios.get(i).getContrasena().equals(contraLog)) {
+
+            if ((lista_usuarios.get(i).getNom_usuario().equals(usuarioLog) && lista_usuarios.get(i).getContrasena().equals(contraLog)) && lista_usuarios.get(i) instanceof administrador) {
                 usuarioActual = lista_usuarios.get(i);
                 SistemaAdmin.setVisible(true);
                 setLocationRelativeTo(this);
                 SistemaAdmin.pack();
                 this.setVisible(false);
-                tf_usuarioLog.setText("");
-                pf_contraLog.setText("");
-            } else if (!lista_usuarios.get(i).getNom_usuario().equals(usuarioLog) && lista_usuarios.get(i).getContrasena().equals(contraLog)) {
-                JOptionPane.showMessageDialog(this, "Usted No esta Registrado o Introdujo el usuario/contraseña Incorrecta");
+                //tf_usuarioLog.setText("");
+                //pf_contraLog.setText("");
+                break;
+            } else if ((lista_usuarios.get(i).getNom_usuario().equals(usuarioLog) && lista_usuarios.get(i).getContrasena().equals(contraLog)) && lista_usuarios.get(i) instanceof UsuarioNormal) {
+                usuarioActual = lista_usuarios.get(i);
+                SistemaUsuario.setVisible(true);
+                setLocationRelativeTo(this);
+                SistemaUsuario.pack();
+                this.setVisible(false);
                 break;
             }
+
         }
+        // if (!lista_usuarios.get(i).getNom_usuario().equals(usuarioLog) && lista_usuarios.get(i).getContrasena().equals(contraLog)) {
+        //JOptionPane.showMessageDialog(this, "Usted No esta Registrado o Introdujo el usuario/contraseña Incorrecta");
+        //}
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
@@ -697,6 +730,10 @@ public class Login extends javax.swing.JFrame {
             DefaultComboBoxModel model = (DefaultComboBoxModel) cb_biblioteca.getModel();
             model.addElement(lib);
             cb_biblioteca.setModel(model);
+            DefaultComboBoxModel modelo = (DefaultComboBoxModel) cb_LibrosGenerales.getModel();
+            modelo.addElement(lib);
+            cb_LibrosGenerales.setModel(modelo);
+
             tf_tituloLibro.setText("");
             tf_valor.setText("");
             tf_edicion.setText("");
@@ -715,7 +752,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5MouseClicked
 
     private void cb_bibliotecaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_bibliotecaItemStateChanged
-        
+
         if (evt.getStateChange() == 2) {
             Libro li = (Libro) cb_biblioteca.getSelectedItem();
             Object[] Row1 = {
@@ -724,10 +761,8 @@ public class Login extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel) tabalInfo.getModel();
             model.addRow(Row1);
         }
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_cb_bibliotecaItemStateChanged
 
     private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseClicked
@@ -737,6 +772,18 @@ public class Login extends javax.swing.JFrame {
             tabalInfo.setModel(model);
         }
     }//GEN-LAST:event_jButton6MouseClicked
+
+    private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
+        if (tabalInfo.getSelectedRow() >= 0) {
+            DefaultComboBoxModel modelo = (DefaultComboBoxModel) tabalInfo.getModel();
+
+        }
+        String titulo = JOptionPane.showInputDialog("Ingrese el nuevo titulo del libro:");
+        String autor = JOptionPane.showInputDialog("Ingrese el nuevo autor:");
+        int newCopias = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nueva cantidad de copias:"));
+
+
+    }//GEN-LAST:event_jButton7MouseClicked
 
     /**
      * @param args the command line arguments
@@ -777,6 +824,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JDialog Registro;
     private javax.swing.JDialog SistemaAdmin;
     private javax.swing.JDialog SistemaUsuario;
+    private javax.swing.JComboBox<String> cb_LibrosGenerales;
     private javax.swing.JComboBox<String> cb_biblioteca;
     private javax.swing.JComboBox<String> cb_genero;
     private com.toedter.calendar.JDateChooser dc_anoPublicacion;
@@ -801,6 +849,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
